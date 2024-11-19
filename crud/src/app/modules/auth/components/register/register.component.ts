@@ -1,15 +1,12 @@
 import { Component } from '@angular/core';
-import { MatSelectModule } from '@angular/material/select';
-import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [MatSelectModule, MatInputModule, MatFormFieldModule],
+  imports: [MatInputModule, MatFormFieldModule],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css',
 })
-export class RegisterComponent {
-  
-}
+export class RegisterComponent {}
