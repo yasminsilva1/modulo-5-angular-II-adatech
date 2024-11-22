@@ -1,1 +1,39 @@
-<p>products-list works!</p>
+<div class="container">
+  <div class="d-flex justify-content-between py-3">
+    <h1>Lista de Produtos</h1>
+
+    <button routerLink="/products/create" mat-flat-button color="accent">
+      Cadastar Produto
+    </button>
+  </div>
+
+  <div class="d-flex flex-wrap gap-3">
+    @for (product of products$ | async; track trackById) {
+    <app-product-card [product]="product"></app-product-card>
+    } @empty {
+    <div class="d-block m-auto">
+      <img
+        class="img-fluid"
+        src="https://cdni.iconscout.com/illustration/premium/thumb/carrinho-de-compras-vazio-7345114-5913480.png?f=webp"
+        alt="Nenhum produto cadastrado"
+      />
+    </div>
+    }
+  </div>
+
+  <!-- <ng-container *ngIf="products$ | async as products">
+    <div class="d-flex gap-3" *ngIf="products.length > 0; else emptyList">
+      <app-product-card
+        *ngFor="let product of products; track: trackById"
+        [product]="product"
+      ></app-product-card>
+    </div>
+  </ng-container>
+  <ng-template #emptyList>
+    <img
+      class="d-block m-auto img-fluid"
+      src="https://cdni.iconscout.com/illustration/premium/thumb/carrinho-de-compras-vazio-7345114-5913480.png?f=webp"
+      alt="Nenhum produto cadastrado"
+    />
+  </ng-template> -->
+</div>
