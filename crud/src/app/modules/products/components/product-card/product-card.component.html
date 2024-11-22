@@ -1,0 +1,20 @@
+<mat-card appearance="outlined">
+  <img mat-card-image [src]="product.image" alt="" />
+
+  <mat-card-content>
+    <h3>{{ product.name }}</h3>
+    <p class="description">{{ product.description }}</p>
+
+    <div class="product-details">
+      <span class="price">{{ product.price | currency : "BRL" }}</span>
+      <span>{{ product.qty }} Un.</span>
+    </div>
+  </mat-card-content>
+
+  <mat-card-actions>
+    <button mat-button>Editar</button>
+    <button mat-button color="warn" (click)="deleteProduct(product.id!)">
+      Deletar
+    </button>
+  </mat-card-actions>
+</mat-card>
