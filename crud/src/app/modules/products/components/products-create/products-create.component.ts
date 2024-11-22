@@ -19,20 +19,19 @@ import { ProductsService } from '../../services/products.service';
   imports: [
     MatInputModule,
     MatFormFieldModule,
+    MatButtonModule,
     FormsModule,
     ReactiveFormsModule,
-    MatButtonModule,
   ],
   templateUrl: './products-create.component.html',
   styleUrl: './products-create.component.css',
 })
 export class ProductsCreateComponent {
-  form = new FormGroup({
-    id: new FormControl(),
+  form: FormGroup = new FormGroup({
     name: new FormControl(null, [Validators.required]),
     description: new FormControl(null, [Validators.required]),
-    price: new FormControl(null, [Validators.required]),
-    qty: new FormControl(null, [Validators.required]),
+    price: new FormControl(null, [Validators.required, Validators.min(1)]),
+    qty: new FormControl(null, [Validators.required, Validators.min(1)]),
     image: new FormControl(null, [Validators.required]),
   });
 
@@ -48,8 +47,13 @@ export class ProductsCreateComponent {
         this.router.navigate(['/products']);
       },
       error: (err) => {
-        console.log(err);
+        console.error('Erro ao cadastras novo produto: ', err);
       },
     });
+  }
+
+  cancelForm(): void {
+    this.form.reset();
+    this.router.navigate(['/products']);
   }
 }

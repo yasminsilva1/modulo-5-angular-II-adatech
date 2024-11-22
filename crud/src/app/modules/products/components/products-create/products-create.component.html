@@ -42,6 +42,14 @@
         <button mat-flat-button color="primary" [disabled]="form.invalid">
           Salvar
         </button>
+        <button
+          class="mx-3"
+          mat-flat-button
+          color="warn"
+          (click)="cancelForm()"
+        >
+          Cancelar
+        </button>
       </div>
     </div>
   </form>
