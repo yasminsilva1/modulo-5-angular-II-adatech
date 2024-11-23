@@ -21,8 +21,4 @@ export class ProductsListComponent {
   ngOnInit(): void {
     this.productsService.loadProductList();
   }
-
-  trackById(product: Product): string {
-    return product.id!;
-  }
 }
