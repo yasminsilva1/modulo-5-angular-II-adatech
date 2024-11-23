@@ -27,9 +27,6 @@ mat-card-content {
   height: 45%;
   width: 100%;
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
 }
 
 h3 {
@@ -42,10 +39,15 @@ h3 {
 }
 
 .description {
+  position: absolute;
+  top: 35%;
+  left: 0;
+  padding: 0 10px;
+  width: 100%;
+  margin: 0;
   font-size: 14px;
   text-align: justify;
   line-height: 1;
-  margin: 8px 0;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
@@ -56,7 +58,7 @@ h3 {
 
 .product-details {
   position: absolute;
-  bottom: 10%;
+  bottom: 0;
   left: 0;
   width: 100%;
   padding: 10px;
