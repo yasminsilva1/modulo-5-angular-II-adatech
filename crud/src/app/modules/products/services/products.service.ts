@@ -23,8 +23,12 @@ export class ProductsService {
     );
   }
 
-  loadProductList() {
-    return this.http.get<Product[]>(this.apiUrl).subscribe({
+  getProductById(id: string): Observable<Product> {
+    return this.http.get<Product>(`${this.apiUrl}/${id}`);
+  }
+
+  loadProductList(): void {
+    this.http.get<Product[]>(this.apiUrl).subscribe({
       next: (products) => {
         this.productList$.next(products);
       },
@@ -40,6 +44,10 @@ export class ProductsService {
         this.addProduct(product);
       })
     );
+  }
+
+  updateProduct(product: Product): Observable<void> {
+    return this.http.put<void>(`${this.apiUrl}/${product.id}`, product);
   }
 
   deleteProduct(id: string): Observable<void> {

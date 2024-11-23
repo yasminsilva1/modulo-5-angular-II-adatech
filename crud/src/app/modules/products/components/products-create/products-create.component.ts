@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, DestroyRef, OnInit } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   FormControl,
   FormGroup,
@@ -9,7 +10,8 @@ import {
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from '../../models/products.model';
 import { ProductsService } from '../../services/products.service';
 
@@ -26,8 +28,9 @@ import { ProductsService } from '../../services/products.service';
   templateUrl: './products-create.component.html',
   styleUrl: './products-create.component.css',
 })
-export class ProductsCreateComponent {
+export class ProductsCreateComponent implements OnInit {
   form: FormGroup = new FormGroup({
+    id: new FormControl(),
     name: new FormControl(null, [Validators.required]),
     description: new FormControl(null, [Validators.required]),
     price: new FormControl(null, [Validators.required, Validators.min(1)]),
@@ -35,25 +38,84 @@ export class ProductsCreateComponent {
     image: new FormControl(null, [Validators.required]),
   });
 
+  id?: string;
+
   constructor(
     private productsService: ProductsService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute,
+    private destroyRef: DestroyRef,
+    private snackBar: MatSnackBar
   ) {}
+
+  ngOnInit(): void {
+    this.id = this.route.snapshot.params['id'];
+
+    if (this.id) {
+      this.getProductById();
+    }
+  }
+
+  getProductById(): void {
+    this.productsService
+      .getProductById(this.id!)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (res) => {
+          this.form.patchValue(res);
+        },
+        error: (err) => {
+          // console.error('Erro ao pegar produto pelo ID:', err);
+          this.openSnackBar('Erro ao carregar produto!');
+        },
+      });
+  }
 
   onSubmit(): void {
     const payload: Product = this.form.getRawValue();
-    this.productsService.saveProduct(payload).subscribe({
-      complete: () => {
-        this.router.navigate(['/products']);
-      },
-      error: (err) => {
-        console.error('Erro ao cadastras novo produto: ', err);
-      },
-    });
+    if (this.id) {
+      this.updateProduct(payload);
+      return;
+    }
+    this.saveProduct(payload);
+  }
+
+  saveProduct(product: Product): void {
+    this.productsService
+      .saveProduct(product)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        complete: () => {
+          this.router.navigate(['/products']);
+        },
+        error: (err) => {
+          // console.error('Erro ao cadastras novo produto: ', err);
+          this.openSnackBar('Erro ao cadastrar produto!');
+        },
+      });
+  }
+
+  updateProduct(product: Product): void {
+    this.productsService
+      .updateProduct(product)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        complete: () => {
+          this.router.navigate(['/products']);
+        },
+        error: (err) => {
+          // console.error('Erro ao editar produto: ', err);
+          this.openSnackBar('Erro ao atualizar produto!');
+        },
+      });
   }
 
   cancelForm(): void {
     this.form.reset();
     this.router.navigate(['/products']);
+  }
+
+  openSnackBar(message: string): void {
+    this.snackBar.open(message, 'X');
   }
 }

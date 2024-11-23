@@ -12,7 +12,9 @@
   </mat-card-content>
 
   <mat-card-actions>
-    <button mat-button>Editar</button>
+    <button mat-button routerLink="/products/edit/{{ product.id }}">
+      Editar
+    </button>
     <button mat-button color="warn" (click)="deleteProduct(product.id!)">
       Deletar
     </button>
