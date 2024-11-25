@@ -39,13 +39,19 @@
       </div>
 
       <div class="col-md-12">
-        <button mat-flat-button color="primary" [disabled]="form.invalid">
+        <button
+          mat-flat-button
+          color="primary"
+          type="submit"
+          [disabled]="form.invalid"
+        >
           Salvar
         </button>
         <button
           class="mx-3"
           mat-flat-button
           color="warn"
+          type="button"
           (click)="cancelForm()"
         >
           Cancelar

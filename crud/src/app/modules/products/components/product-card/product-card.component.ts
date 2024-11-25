@@ -4,6 +4,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { RouterLink } from '@angular/router';
+import { SnackBarService } from '../../../../utils/snack-bar.service';
 import { Product } from '../../models/products.model';
 import { ProductsService } from '../../services/products.service';
 
@@ -19,7 +20,8 @@ export class ProductCardComponent {
 
   constructor(
     private productsService: ProductsService,
-    private destroyRef: DestroyRef
+    private destroyRef: DestroyRef,
+    private snakBarService: SnackBarService
   ) {}
 
   deleteProduct(id: string) {
@@ -27,9 +29,12 @@ export class ProductCardComponent {
       .deleteProduct(id)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
-        complete: () => {},
+        complete: () => {
+          this.snakBarService.openSnackBar('Produto deletado!');
+        },
         error: (err) => {
-          console.error('Erro ao deletar produto: ', err);
+          this.snakBarService.openSnackBar('Erro ao deletar produto.');
+          // console.error('Erro ao deletar produto: ', err);
         },
       });
   }

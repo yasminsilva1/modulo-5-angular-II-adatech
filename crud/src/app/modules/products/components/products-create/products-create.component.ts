@@ -10,8 +10,8 @@ import {
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
+import { SnackBarService } from '../../../../utils/snack-bar.service';
 import { Product } from '../../models/products.model';
 import { ProductsService } from '../../services/products.service';
 
@@ -45,7 +45,7 @@ export class ProductsCreateComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private destroyRef: DestroyRef,
-    private snackBar: MatSnackBar
+    private sanckBarService: SnackBarService
   ) {}
 
   ngOnInit(): void {
@@ -65,8 +65,8 @@ export class ProductsCreateComponent implements OnInit {
           this.form.patchValue(res);
         },
         error: (err) => {
+          this.sanckBarService.openSnackBar('Erro ao carregar produto!');
           // console.error('Erro ao pegar produto pelo ID:', err);
-          this.openSnackBar('Erro ao carregar produto!');
         },
       });
   }
@@ -86,11 +86,12 @@ export class ProductsCreateComponent implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         complete: () => {
+          this.sanckBarService.openSnackBar('Produto cadastrado com sucesso!');
           this.router.navigate(['/products']);
         },
         error: (err) => {
+          this.sanckBarService.openSnackBar('Erro ao cadastrar produto!');
           // console.error('Erro ao cadastras novo produto: ', err);
-          this.openSnackBar('Erro ao cadastrar produto!');
         },
       });
   }
@@ -101,11 +102,12 @@ export class ProductsCreateComponent implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         complete: () => {
+          this.sanckBarService.openSnackBar('Produto atualizado com sucesso!');
           this.router.navigate(['/products']);
         },
         error: (err) => {
+          this.sanckBarService.openSnackBar('Erro ao atualizar produto!');
           // console.error('Erro ao editar produto: ', err);
-          this.openSnackBar('Erro ao atualizar produto!');
         },
       });
   }
@@ -113,9 +115,5 @@ export class ProductsCreateComponent implements OnInit {
   cancelForm(): void {
     this.form.reset();
     this.router.navigate(['/products']);
-  }
-
-  openSnackBar(message: string): void {
-    this.snackBar.open(message, 'X');
   }
 }

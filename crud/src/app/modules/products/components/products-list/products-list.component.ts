@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
-import { Product } from '../../models/products.model';
 import { ProductsService } from '../../services/products.service';
 import { ProductCardComponent } from '../product-card/product-card.component';
 
