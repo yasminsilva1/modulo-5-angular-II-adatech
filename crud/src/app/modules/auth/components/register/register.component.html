@@ -1,71 +1,84 @@
 <div class="container">
-  <h1 class="my-4">Cadastrar Usuário</h1>
+  <h1 class="my-4 text-center">Cadastrar Usuário</h1>
 
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
-    <div class="row">
-      <div class="col-md-6">
-        <mat-form-field appearance="outline">
-          <mat-label>Nome</mat-label>
-          <input matInput formControlName="name" />
-        </mat-form-field>
+    <fieldset>
+      <legend>Dados Pessoais</legend>
+      <div class="row">
+        <div class="col-md-6">
+          <mat-form-field appearance="outline">
+            <mat-label>Nome</mat-label>
+            <input matInput formControlName="name" />
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-6">
+          <mat-form-field appearance="outline">
+            <mat-label>Profissão</mat-label>
+            <input matInput formControlName="profession" />
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-6">
+          <mat-form-field appearance="outline">
+            <mat-label>Data de Nascimento</mat-label>
+            <input matInput formControlName="birthDate" mask="00/00/0000" />
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-6">
+          <mat-form-field appearance="outline">
+            <mat-label>CPF</mat-label>
+            <input
+              matInput
+              formControlName="documentNumber"
+              mask="000.000.000-00"
+            />
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-6">
+          <mat-form-field appearance="outline">
+            <mat-label>Telefone</mat-label>
+            <input matInput formControlName="phone" mask="(00) 00000-0000" />
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-6">
+          <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input type="email" matInput formControlName="email" />
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-6">
+          <mat-form-field appearance="outline">
+            <mat-label>Senha</mat-label>
+            <input type="password" matInput formControlName="password" />
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-6">
+          <mat-form-field appearance="outline">
+            <mat-label>Confirmação de senha</mat-label>
+            <input type="password" matInput formControlName="passwordConfirm" />
+          </mat-form-field>
+        </div>
       </div>
+    </fieldset>
 
-      <div class="col-md-6">
-        <mat-form-field appearance="outline">
-          <mat-label>Email</mat-label>
-          <input type="email" matInput formControlName="email" />
-        </mat-form-field>
-      </div>
-
-      <div class="col-md-6">
-        <mat-form-field appearance="outline">
-          <mat-label>Profissão</mat-label>
-          <input matInput formControlName="profession" />
-        </mat-form-field>
-      </div>
-
-      <div class="col-md-3">
-        <mat-form-field appearance="outline">
-          <mat-label>Data de Nascimento</mat-label>
-          <input type="date" matInput formControlName="birthDate" />
-        </mat-form-field>
-      </div>
-
-      <div class="col-md-3">
-        <mat-form-field appearance="outline">
-          <mat-label>CPF</mat-label>
-          <input matInput formControlName="documentNumber" />
-        </mat-form-field>
-      </div>
-
-      <div class="col-md-6">
-        <mat-form-field appearance="outline">
-          <mat-label>Telefone</mat-label>
-          <input matInput formControlName="phone" />
-        </mat-form-field>
-      </div>
-
-      <div class="col-md-6">
-        <mat-form-field appearance="outline">
-          <mat-label>Senha</mat-label>
-          <input type="password" matInput formControlName="password" />
-        </mat-form-field>
-      </div>
-
-      <!-- <div class="col-md-6">
-        <mat-form-field appearance="outline">
-          <mat-label>Confirmação de senha</mat-label>
-          <input type="password" matInput />
-        </mat-form-field>
-      </div> -->
-
-      <h2>Endereço</h2>
-
-      <div class="row" formGroupName="address">
+    <fieldset formGroupName="address">
+      <legend>Endereço</legend>
+      <div class="row">
         <div class="col-md-6">
           <mat-form-field appearance="outline">
             <mat-label>CEP</mat-label>
-            <input matInput formControlName="zipCode" (blur)="fetchAddress()" />
+            <input
+              matInput
+              formControlName="zipCode"
+              (blur)="fetchAddress()"
+              mask="00000-000"
+            />
           </mat-form-field>
         </div>
 
@@ -76,14 +89,7 @@
           </mat-form-field>
         </div>
 
-        <div class="col-md-6">
-          <mat-form-field appearance="outline">
-            <mat-label>Bairro</mat-label>
-            <input matInput formControlName="neighborhood" />
-          </mat-form-field>
-        </div>
-
-        <div class="col-md-2">
+        <div class="col-md-3">
           <mat-form-field appearance="outline">
             <mat-label>Número</mat-label>
             <input
@@ -95,10 +101,17 @@
           </mat-form-field>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-3">
           <mat-form-field appearance="outline">
             <mat-label>Complemento</mat-label>
             <input matInput formControlName="complement" />
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-6">
+          <mat-form-field appearance="outline">
+            <mat-label>Bairro</mat-label>
+            <input matInput formControlName="neighborhood" />
           </mat-form-field>
         </div>
 
@@ -115,62 +128,27 @@
             <input matInput formControlName="state" />
           </mat-form-field>
         </div>
-
-        <!-- <div class="col-md-2">
-          <mat-form-field>
-            <mat-label>UF</mat-label>
-            <mat-select formControlName="state">
-              <mat-option value="ac">AC</mat-option>
-              <mat-option value="al">AL</mat-option>
-              <mat-option value="ap">AP</mat-option>
-              <mat-option value="am">AM</mat-option>
-              <mat-option value="ba">BA</mat-option>
-              <mat-option value="ce">CE</mat-option>
-              <mat-option value="df">DF</mat-option>
-              <mat-option value="es">ES</mat-option>
-              <mat-option value="go">GO</mat-option>
-              <mat-option value="ma">MA</mat-option>
-              <mat-option value="mt">MT</mat-option>
-              <mat-option value="ms">MS</mat-option>
-              <mat-option value="mg">MG</mat-option>
-              <mat-option value="pa">PA</mat-option>
-              <mat-option value="pb">PB</mat-option>
-              <mat-option value="pr">PR</mat-option>
-              <mat-option value="pe">PE</mat-option>
-              <mat-option value="pi">PI</mat-option>
-              <mat-option value="rj">RJ</mat-option>
-              <mat-option value="rn">RN</mat-option>
-              <mat-option value="rs">RS</mat-option>
-              <mat-option value="ro">RO</mat-option>
-              <mat-option value="rr">RR</mat-option>
-              <mat-option value="sc">SC</mat-option>
-              <mat-option value="sp">SP</mat-option>
-              <mat-option value="se">SE</mat-option>
-              <mat-option value="to">TO</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div> -->
       </div>
+    </fieldset>
 
-      <div class="col-md-12">
-        <button
-          mat-raised-button
-          color="primary"
-          type="submit"
-          [disabled]="form.invalid"
-        >
-          Cadastrar
-        </button>
-        <button
-          class="mx-3"
-          mat-flat-button
-          color="warn"
-          type="button"
-          (click)="cancelForm()"
-        >
-          Cancelar
-        </button>
-      </div>
+    <div class="col-md-12">
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="form.invalid"
+      >
+        Cadastrar
+      </button>
+      <button
+        class="mx-3"
+        mat-flat-button
+        color="warn"
+        type="button"
+        (click)="cancelForm()"
+      >
+        Cancelar
+      </button>
     </div>
   </form>
 </div>
