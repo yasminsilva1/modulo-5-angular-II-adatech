@@ -43,6 +43,7 @@ export class LoginComponent {
       .subscribe({
         next: (res) => {
           sessionStorage.setItem('USER_TOKEN', res.token);
+          sessionStorage.setItem('USER_ROLE', 'USER');
           this.router.navigate(['/products']);
         },
         error: (err) => {
