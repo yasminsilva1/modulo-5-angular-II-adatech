@@ -14,7 +14,7 @@ export const PRODUCTS_ROUTES: Routes = [
   {
     path: 'create',
     component: ProductsCreateComponent,
-    canActivate: [authGuard, rolesGuard],
+    canActivate: [authGuard],
     data: {
       roles: [UserRoles.ADMIN],
     },

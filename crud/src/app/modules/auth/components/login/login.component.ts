@@ -10,6 +10,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { setUser } from '../../../../core/store/auth.actions';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -33,7 +35,8 @@ export class LoginComponent {
   constructor(
     private authService: AuthService,
     private destroyRef: DestroyRef,
-    private router: Router
+    private router: Router,
+    private store: Store
   ) {}
 
   onSubmit() {
@@ -42,8 +45,10 @@ export class LoginComponent {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: (res) => {
-          sessionStorage.setItem('USER_TOKEN', res.token);
+          // sessionStorage.setItem('USER_TOKEN', res.token);
           sessionStorage.setItem('USER_ROLE', 'USER');
+
+          this.store.dispatch(setUser({ user: res }));
           this.router.navigate(['/products']);
         },
         error: (err) => {

@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { UserRoles } from '../constantes/user-roles.enum';
+import { selectUser } from '../store/auth.selector';
 
 @Injectable({
   providedIn: 'root',
@@ -8,12 +10,15 @@ import { UserRoles } from '../constantes/user-roles.enum';
 export class SecurityService {
   isLoggedIn$ = new BehaviorSubject<boolean>(false);
 
-  constructor() {}
+  constructor(private store: Store) {}
 
   checkAuthStatus(): Observable<boolean> {
-    const token = sessionStorage.getItem('USER_TOKEN');
-    this.isLoggedIn$.next(!!token);
-    return this.isLoggedIn$;
+    const user$ = this.store.select(selectUser);
+
+    return user$.subscribe((user) => {
+      this.isLoggedIn$.next(!!user);
+      return this.isLoggedIn$;
+    });
   }
 
   checkUserRoles(): Observable<UserRoles> {
