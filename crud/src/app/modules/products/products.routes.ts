@@ -14,7 +14,7 @@ export const PRODUCTS_ROUTES: Routes = [
   {
     path: 'create',
     component: ProductsCreateComponent,
-    canActivate: [authGuard],
+    canActivate: [authGuard, rolesGuard],
     data: {
       roles: [UserRoles.ADMIN],
     },
@@ -22,6 +22,9 @@ export const PRODUCTS_ROUTES: Routes = [
   {
     path: 'edit/:id',
     component: ProductsCreateComponent,
-    canActivate: [authGuard],
+    canActivate: [authGuard, rolesGuard],
+    data: {
+      roles: [UserRoles.ADMIN],
+    },
   },
 ];

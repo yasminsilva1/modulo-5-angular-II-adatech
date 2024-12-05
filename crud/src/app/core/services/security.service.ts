@@ -12,13 +12,18 @@ export class SecurityService {
 
   constructor(private store: Store) {}
 
-  checkAuthStatus(): Observable<boolean> {
-    const user$ = this.store.select(selectUser);
+  // checkAuthStatus(): Observable<boolean> {
+  //   const user$ = this.store.select(selectUser);
+  //   return user$.subscribe((user) => {
+  //     this.isLoggedIn$.next(!!user);
+  //     return this.isLoggedIn$;
+  //   });
+  // }
 
-    return user$.subscribe((user) => {
-      this.isLoggedIn$.next(!!user);
-      return this.isLoggedIn$;
-    });
+  checkAuthStatus(): Observable<boolean> {
+    const token = sessionStorage.getItem('USER_TOKEN');
+    this.isLoggedIn$.next(!!token);
+    return this.isLoggedIn$;
   }
 
   checkUserRoles(): Observable<UserRoles> {
