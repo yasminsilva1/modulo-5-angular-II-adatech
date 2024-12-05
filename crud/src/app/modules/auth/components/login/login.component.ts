@@ -45,10 +45,10 @@ export class LoginComponent {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: (res) => {
-          // sessionStorage.setItem('USER_TOKEN', res.token);
+          sessionStorage.setItem('USER_TOKEN', res.token);
           sessionStorage.setItem('USER_ROLE', 'USER');
 
-          this.store.dispatch(setUser({ user: res }));
+          // this.store.dispatch(setUser({ user: res }));
           this.router.navigate(['/products']);
         },
         error: (err) => {
